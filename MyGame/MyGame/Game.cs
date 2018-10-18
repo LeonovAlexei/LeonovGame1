@@ -38,6 +38,7 @@ namespace MyGame
             timer.Start();
             timer.Tick += Timer_Tick;
             Load();
+            //LoadS();
         }
         //Обработчик таймера:
         //Более подробно про события и обработчики событий мы поговорим на следующих уроках.
@@ -45,14 +46,15 @@ namespace MyGame
         {
             Draw();
             Update();
+           
         }
         public static void Draw()
         {
             // Проверяем вывод графики
-            Buffer.Graphics.Clear(Color.Black);
-            Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
-            Buffer.Render();
+           // Buffer.Graphics.Clear(Color.Black);
+           // Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
+           // Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
+           // Buffer.Render();
             //Добавим в метод Draw вывод всех этих объектов на экран,
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs)
@@ -74,16 +76,19 @@ namespace MyGame
        public static BaseObject[] _objs;
         public static void Load()
         {
-             
-        _objs = new BaseObject[30];
-            for (int i = 0; i < _objs.Length; i++)
-                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(15 - i, 15 - i), new Size(20, 20));
 
-            //_objs = new BaseObject[30];
-            //for (int i = 0; i < _objs.Length; i++)
-            //    _objs[i] = new Star(new Point(600, i * 20), new Point(-i, 0), new Size(20, 20));
+            _objs = new BaseObject[30];
+            for (int i = 0; i < _objs.Length / 2; i++)
+                _objs[i] = new BaseObject(new Point(400, 300), new Point(i, -i), new Size(5, 5));
+            for (int n=0,i = (_objs.Length / 2)-1; i < _objs.Length; i++,++n)
+                _objs[i] = new Star(new Point(1, n*40), new Point((10*n)+1, 0), new Size(4,5));
+
+
+            _objs[_objs.Length-1] = new Galaxy(new Point(800,150), new Point(10, 0), new Size(3, 3));
+
+
 
         }
-
+        
     }
 }
