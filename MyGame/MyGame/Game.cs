@@ -80,7 +80,7 @@ namespace MyGame
 
             _objs = new BaseObject[30];
             for (int i = 0; i < _objs.Length / 2; i++)
-                _objs[i] = new BaseObject(new Point((rnd.Next(1,800)), (rnd.Next(1, 600))), new Point(5, -5), new Size(1, 1));
+                _objs[i] = new BaseObject(new Point((rnd.Next(50,800)), (rnd.Next(50, 600))), new Point(7, -10), new Size(10, 10));
             for (int n=0,i = (_objs.Length / 2)-1; i < _objs.Length; i++,++n)
                 _objs[i] = new Star(new Point((rnd.Next(1, 800)), (rnd.Next(1, 600))), new Point(3, -1), new Size(4,5));
 

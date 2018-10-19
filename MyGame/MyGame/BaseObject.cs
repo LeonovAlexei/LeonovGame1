@@ -10,6 +10,12 @@ namespace MyGame
 {
     class BaseObject
     {
+        
+
+        /// <summary>
+        /// Уменьшаем картинки
+        /// </summary>
+        /// <returns></returns>
         public bool ThumbnailCallback()
         {
             return true;
@@ -26,22 +32,21 @@ namespace MyGame
         }
         public virtual void Draw()
         {
-            var aster = new List<string> { "aster1.png", "aster2.png", "aster3.png", "aster4.png" };
-            for (int i = 0; i < aster.Count; i++)
-            {
-                Image a = Image.FromFile(aster[i]);
+           
+          
+                //Уменьшаем картинку
+                   
+                Image a = Image.FromFile("aster3.png");
                 Image.GetThumbnailImageAbort callback =
                 new Image.GetThumbnailImageAbort(ThumbnailCallback);
-                Image pThumbnail = a.GetThumbnailImage(40, 40, callback, new IntPtr());
-                Game.Buffer.Graphics.DrawImageUnscaled(pThumbnail, Pos.X, Pos.Y, Size.Width, Size.Height);
-
-            }
-            
-            
+                Image pThumbnail = a.GetThumbnailImage(20, 20, callback, new IntPtr());
+               
+          
+            Game.Buffer.Graphics.DrawImageUnscaled(pThumbnail, Pos.X, Pos.Y, Size.Width, Size.Height);
            
+            
 
             
-            //Game.Buffer.Graphics.DrawRectangle(Pens.White, Pos.X+10, Pos.Y+30, Size.Width+10, Size.Height+15);
 
         }
         public virtual void Update()
