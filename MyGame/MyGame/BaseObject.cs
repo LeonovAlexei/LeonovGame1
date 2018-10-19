@@ -10,6 +10,11 @@ namespace MyGame
 {
     class BaseObject
     {
+        public bool ThumbnailCallback()
+        {
+            return true;
+        }
+       
         protected Point Pos;
         protected Point Dir;
         protected Size Size;
@@ -21,7 +26,21 @@ namespace MyGame
         }
         public virtual void Draw()
         {
-            Game.Buffer.Graphics.DrawEllipse(Pens.DarkBlue, Pos.X, Pos.Y, Size.Width, Size.Height);
+            var aster = new List<string> { "aster1.png", "aster2.png", "aster3.png", "aster4.png" };
+            for (int i = 0; i < aster.Count; i++)
+            {
+                Image a = Image.FromFile(aster[i]);
+                Image.GetThumbnailImageAbort callback =
+                new Image.GetThumbnailImageAbort(ThumbnailCallback);
+                Image pThumbnail = a.GetThumbnailImage(40, 40, callback, new IntPtr());
+                Game.Buffer.Graphics.DrawImageUnscaled(pThumbnail, Pos.X, Pos.Y, Size.Width, Size.Height);
+
+            }
+            
+            
+           
+
+            
             //Game.Buffer.Graphics.DrawRectangle(Pens.White, Pos.X+10, Pos.Y+30, Size.Width+10, Size.Height+15);
 
         }

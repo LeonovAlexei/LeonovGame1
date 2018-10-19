@@ -78,9 +78,9 @@ namespace MyGame
         {
             Random rnd = new Random();//Распределяем наши объекты случайным образом в пределах видимости
 
-            _objs = new BaseObject[80];
+            _objs = new BaseObject[30];
             for (int i = 0; i < _objs.Length / 2; i++)
-                _objs[i] = new BaseObject(new Point((rnd.Next(1,800)), (rnd.Next(1, 600))), new Point(5, -5), new Size(5, 5));
+                _objs[i] = new BaseObject(new Point((rnd.Next(1,800)), (rnd.Next(1, 600))), new Point(5, -5), new Size(1, 1));
             for (int n=0,i = (_objs.Length / 2)-1; i < _objs.Length; i++,++n)
                 _objs[i] = new Star(new Point((rnd.Next(1, 800)), (rnd.Next(1, 600))), new Point(3, -1), new Size(4,5));
 
