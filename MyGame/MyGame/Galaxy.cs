@@ -29,20 +29,10 @@ namespace MyGame
             Pos.X = Pos.X - Dir.X;
 
             if (Pos.X <= -Game.Width) Pos.X = Game.Width;
+            //Galaxyjpg.RotateFlip(RotateFlipType.RotateNoneFlipXY );
+           // Game.Buffer.Graphics.TranslateTransform(Pos.X, Pos.Y);
 
-
-            //Image Galaxyjpg = null;
-            //using (FileStream stream = new FileStream("galaxy.jpg", FileMode.Open, FileAccess.Read))
-            //{
-            //    Galaxyjpg = Image.FromStream(stream);
-            //}
-            //if (Galaxyjpg != null)
-            //{
-            //    Galaxyjpg = RotateImage(Galaxyjpg, 10); //angle - угол в градусах
-            //    Galaxyjpg.Save("galaxy.jpg");
-            //}
-            Galaxyjpg.RotateFlip(RotateFlipType.RotateNoneFlipXY );
-            //RotateTransform(Game.Buffer.Graphics.DrawImageUnscaled(Galaxyjpg, Pos.X, Pos.Y, Size.Width, Size.Height));
+            
 
         }
 

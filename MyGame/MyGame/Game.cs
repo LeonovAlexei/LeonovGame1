@@ -76,15 +76,16 @@ namespace MyGame
        public static BaseObject[] _objs;
         public static void Load()
         {
+            Random rnd = new Random();//Распределяем наши объекты случайным образом в пределах видимости
 
-            _objs = new BaseObject[30];
+            _objs = new BaseObject[80];
             for (int i = 0; i < _objs.Length / 2; i++)
-                _objs[i] = new BaseObject(new Point(400, 300), new Point(i, -i), new Size(5, 5));
+                _objs[i] = new BaseObject(new Point((rnd.Next(1,800)), (rnd.Next(1, 600))), new Point(5, -5), new Size(5, 5));
             for (int n=0,i = (_objs.Length / 2)-1; i < _objs.Length; i++,++n)
-                _objs[i] = new Star(new Point(1, n*40), new Point((10*n)+1, 0), new Size(4,5));
+                _objs[i] = new Star(new Point((rnd.Next(1, 800)), (rnd.Next(1, 600))), new Point(3, -1), new Size(4,5));
 
 
-            _objs[_objs.Length-1] = new Galaxy(new Point(800,150), new Point(10, 0), new Size(3, 3));
+            _objs[_objs.Length-1] = new Galaxy(new Point((rnd.Next(50, 750)), (rnd.Next(50, 550))), new Point(10, 0), new Size(3, 3));
 
 
 
