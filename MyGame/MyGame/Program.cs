@@ -14,6 +14,7 @@ namespace MyGame
             Form form = new Form();
             form.Width = 800;
             form.Height = 600;
+            //SplashScreen.Init(form);
             Game.Init(form);
             form.Show();
             Game.Draw();
