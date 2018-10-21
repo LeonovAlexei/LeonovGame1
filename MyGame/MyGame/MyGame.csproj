@@ -67,5 +67,12 @@
       <DependentUpon>FormSS.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="aster1.PNG" />
+    <Content Include="aster2.PNG" />
+    <Content Include="aster3.PNG" />
+    <Content Include="aster4.PNG" />
+    <Content Include="galaxy.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
