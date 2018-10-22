@@ -16,6 +16,8 @@ namespace MyGame
         // Ширина и высота игрового поля
         public static int Width { get; set; }
         public static int Height { get; set; }
+        public static Bullet _bullet;
+        public static Asteroid[] _asteroids;
         static Game()
         {
         }
@@ -28,8 +30,14 @@ namespace MyGame
             g = form.CreateGraphics();
             // Создаем объект (поверхность рисования) и связываем его с формой
             // Запоминаем размеры формы
+
             Width = form.ClientSize.Width;
             Height = form.ClientSize.Height;
+            //Задание 4 для вызова ошибки нужно поменять значения на 1000
+            if (Width>10000||Height>10000)
+            {
+                throw new ArgumentOutOfRangeException($"Выводим исключение по задаче 4... Высота {Width} или ширина{Height} больше 1000 ");
+            }
             // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
            
@@ -37,7 +45,7 @@ namespace MyGame
             Timer timer = new Timer { Interval = 100 };
             timer.Start();
             timer.Tick += Timer_Tick;
-            Load();
+            //Load();
             //LoadS();
         }
         //Обработчик таймера:
@@ -59,6 +67,10 @@ namespace MyGame
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs)
                 obj.Draw();
+            foreach (Asteroid obj in _asteroids)
+                obj.Draw();
+            _bullet.Draw();
+                     
             Buffer.Render();
 
         }
@@ -67,6 +79,23 @@ namespace MyGame
         {
             foreach (BaseObject obj in _objs)
                 obj.Update();
+            foreach (Asteroid a in _asteroids)
+            {
+                a.Update();
+                if (a.Collision(_bullet)) { System.Media.SystemSounds.Hand.Play();
+
+                    //Задание 3 при столкновении пули с астероидом они регенирируются
+                    // Пуля повторно загружается, 
+                    //астероид -- находим индекс астероида в который попала пуля
+                    // и создаем по этому индексу в массиве новый астероид 
+                    var rnd = new Random();
+                    int r = rnd.Next(5, 50);
+                    var indexAster = Array.IndexOf(_asteroids, a);
+                    _asteroids [indexAster]   = new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r / 5, r), new Size(r, r));
+                    _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
+                }
+            }
+            _bullet.Update();
         }
 
 
@@ -76,16 +105,29 @@ namespace MyGame
        public static BaseObject[] _objs;
         public static void Load()
         {
-            Random rnd = new Random();//Распределяем наши объекты случайным образом в пределах видимости
+            var rnd = new Random(20);//Распределяем наши объекты случайным образом в пределах видимости
 
             _objs = new BaseObject[30];
-            for (int i = 0; i < _objs.Length / 2; i++)
-                _objs[i] = new BaseObject(new Point((rnd.Next(50,800)), (rnd.Next(50, 600))), new Point(7, -10), new Size(10, 10));
-            for (int n=0,i = (_objs.Length / 2)-1; i < _objs.Length; i++,++n)
-                _objs[i] = new Star(new Point((rnd.Next(1, 800)), (rnd.Next(1, 600))), new Point(3, -1), new Size(4,5));
+            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
+            _asteroids = new Asteroid[3];
+
+            for (var i = 0; i < _objs.Length; i++)
+            {
+                int r = rnd.Next(5, 50);
+                _objs[i] = new Star(new Point(1000, rnd.Next(0,Game.Height)), new Point(-r, r), new Size(3, 3));
+            }
+            for (var i = 0; i < _asteroids.Length; i++)
+            {
+                int r = rnd.Next(5, 50);
+                _asteroids[i] = new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r/5, r), new Size(r, r));
+            }
+           // throw new GameObjectException($"Выводим исключение по задаче 5... ","Что конкретно произошло ?",DateTime.Now);
 
 
-            _objs[_objs.Length-1] = new Galaxy(new Point((rnd.Next(50, 750)), (rnd.Next(50, 550))), new Point(10, 0), new Size(3, 3));
+
+            //галактику не запускаем
+
+            // _objs[_objs.Length-1] = new Galaxy(new Point((rnd.Next(50, 750)), (rnd.Next(50, 550))), new Point(10, 0), new Size(3, 3));
 
 
 

@@ -45,13 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asteroid.cs" />
     <Compile Include="BaseObject.cs" />
+    <Compile Include="Bullet.cs" />
     <Compile Include="FormSS.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSS.Designer.cs">
       <DependentUpon>FormSS.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameException.cs" />
+    <Compile Include="ICollision.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Galaxy.cs" />
     <Compile Include="Game.cs" />
