@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace MyGame
 {
-    class Asteroid:BaseObject
+    class RepairKit : BaseObject
     {
         public int Power { get; set; }
-        Image a = Image.FromFile("../../aster.png");
-        public Asteroid (Point pos, Point dir, Size size ):base (pos, dir, size)
+        Image r = Image.FromFile("../../RepairKit.jpg");
+        public RepairKit(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
             Power = 1;
         }
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawImage(a, Pos.X, Pos.Y, Size.Width, Size.Height);
-           // Game.Buffer.Graphics.FillEllipse(Brushes.White, Pos.X, Pos.Y, Size.Width, Size.Height); ;
+            Game.Buffer.Graphics.DrawImage(r, Pos.X, Pos.Y, Size.Width, Size.Height);
+             //Game.Buffer.Graphics.FillEllipse(Brushes.White, Pos.X, Pos.Y, Size.Width, Size.Height); ;
         }
         public override void Update()
         {

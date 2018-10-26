@@ -13,23 +13,41 @@ namespace MyGame
     /// </summary>
     class Ship : BaseObject
     {
+       
         /// <summary>
         ///  закрытое поле Энергия корабля = 100
         /// </summary>
         private int _energy = 100;
+        private int maxEnergy = 100;
         /// <summary>
         /// Устанавливаем свойство только для чтения для поля _energy(Энергия корабля)
         /// </summary>
         public int Energy => _energy;
-        /// <summary>
+         /// <summary>
         /// Метод рассчитывает уменьшение енергии корабля на величину входящей переменной
         /// _energy=_energy-n
         /// </summary>
         /// <param name="n"></param>
         public void EnergyLow(int n)
         {
+            
             _energy -= n;
+            
+            if (LogBook.listOfHandlers != null) LogBook.listOfHandlers($" Повреждения корабля: - {n} енргии");
         }
+        public void EnergyUp(int n)
+        {
+
+            if (_energy < maxEnergy)
+            {
+                _energy += n;
+                if (LogBook.listOfHandlers != null) LogBook.listOfHandlers($" Произведен ремонт корабля: + {n} енргии");
+            }
+            else _energy = maxEnergy;
+            
+
+        }
+        Image s = Image.FromFile("../../Ship.png");
         /// <summary>
         /// Назначаем пустой конструктор по умолчанию который наследуется от базового
         /// </summary>
@@ -44,7 +62,8 @@ namespace MyGame
         /// </summary>
         public override void Draw()
         {
-            Game.Buffer.Graphics.FillEllipse(Brushes.White, Pos.X, Pos.Y,Size.Width, Size.Height);
+            Game.Buffer.Graphics.DrawImage(s, Pos.X, Pos.Y, Size.Width, Size.Height);
+            //Game.Buffer.Graphics.FillEllipse(Brushes.White, Pos.X, Pos.Y,Size.Width, Size.Height);
         }
         /// <summary>
         /// Метод перегруженный обновление для класса корабль пустой
@@ -67,11 +86,18 @@ namespace MyGame
             if (Pos.Y < Game.Height) Pos.Y = Pos.Y + Dir.Y;
         }
         /// <summary>
-        /// Метод умереть для корабля пустой
+        /// Событие вызывается когда погибает корабль
+        /// </summary>
+        public static event Message MessageDie;
+        /// <summary>
+        /// Метод гибели для корабля
         /// </summary>
         public void Die()
         {
-
+            MessageDie?.Invoke();
+            
+            if (LogBook.listOfHandlers != null) LogBook.listOfHandlers(" Корабль уничтожен! ");
         }
+        
     }
 }
