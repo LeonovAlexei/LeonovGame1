@@ -10,6 +10,17 @@ namespace MyGame
 {
     class BaseObject
     {
+        
+
+        /// <summary>
+        /// Уменьшаем картинки
+        /// </summary>
+        /// <returns></returns>
+        public bool ThumbnailCallback()
+        {
+            return true;
+        }
+       
         protected Point Pos;
         protected Point Dir;
         protected Size Size;
@@ -19,14 +30,29 @@ namespace MyGame
             Dir = dir;
             Size = size;
         }
-        public void Draw()
+        public virtual void Draw()
         {
-            Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);
+           
+          
+                //Уменьшаем картинку
+                   
+                Image a = Image.FromFile("aster3.png");
+                Image.GetThumbnailImageAbort callback =
+                new Image.GetThumbnailImageAbort(ThumbnailCallback);
+                Image pThumbnail = a.GetThumbnailImage(20, 20, callback, new IntPtr());
+               
+          
+            Game.Buffer.Graphics.DrawImageUnscaled(pThumbnail, Pos.X, Pos.Y, Size.Width, Size.Height);
+           
+            
+
+            
+
         }
-        public void Update()
+        public virtual void Update()
         {
-            Pos.X = Pos.X + Dir.X;
-            Pos.Y = Pos.Y + Dir.Y;
+            Pos.X = Pos.X  + Dir.X;
+            Pos.Y = Pos.Y  + Dir.Y;
             if (Pos.X < 0) Dir.X = -Dir.X;
             if (Pos.X > Game.Width) Dir.X = -Dir.X;
             if (Pos.Y < 0) Dir.Y = -Dir.Y;
